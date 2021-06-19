@@ -3,11 +3,15 @@ import './index.css'
 const ContentList = ({ content }) => {
 
   const [images, setimages] = useState([]);
-
+  
   useEffect(() => {
-    content.results ? setimages([...content.results]) : setimages([...images, ...content]);
-    // setimages([...images, ...content]);
-    // console.log(content)
+    if (content.results) {
+      setimages([...content.results])
+    } else if (Array.isArray(content) && !content.results) {
+      setimages([...images, ...content])
+    } else if (!Array.isArray(content)) {
+      setimages([]);
+    }     
   }, [content]);
 
   return (
